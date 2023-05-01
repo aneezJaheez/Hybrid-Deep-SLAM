@@ -1,0 +1,5 @@
+<launch>	
+	<node pkg="hybrid_slam" type="data_publisher.py" name="data_stream" output="screen"/>
+	<node pkg="hybrid_slam" type="track.py" name="deep_perception" output="screen"/>
+	<node pkg="hybrid_slam" type="stereo_kitti" name="slam" output="screen" args="/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/configs/configs_SLAM.yaml"/>
+</launch>

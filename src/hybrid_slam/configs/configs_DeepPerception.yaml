@@ -1,0 +1,33 @@
+#Deep Perception Parameters
+
+#Dataset
+left_imgs_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/data/KITTI/dataset/sequences/00/image_0/" #path to left stereo image directory
+right_imgs_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/data/KITTI/dataset/sequences/00/image_1/" #path to right stereo image directory
+publish_rate: 0.2 #Duration in seconds for stereo image publisher to wait before publishing a new pair of images. Increase this value when running on low-compute power devices. Real-time performance can be achieved on GPUs. 
+
+#YOLO
+yolo_weights: 'yolov8n-seg.pt' # model.pt path(s_l)
+reid_weights: 'osnet_x0_25_msmt17.pt'  # model.pt path
+tracking_method: 'bytetrack' #Tracking method (strongsort, bytetack)
+imgsz: 640 #Single int value denoting h,w of the image during inference
+conf_thres: 0.25  # confidence threshold
+iou_thres: 0.45  # NMS IOU threshold
+max_det: 1000  # maximum detections per image
+device: 'cpu'  # cuda device, i.e. 0 or 0,1,2,3 or cpu
+show_vid: True  # show results
+save_txt: False  # save results to *.txt
+save_vid: False  # save confidences in --save-txt labels
+nosave: False  # do not save images/videos
+classes: None  # filter by class: --class 0, or --class 0 2 3
+agnostic_nms: False  # class-agnostic NMS
+update: False  # update all models
+name: 'exp'  # save results to project/name
+exist_ok: False  # existing project/name ok, do not increment
+line_thickness: 2  # bounding box thickness (pixels)
+half: False  # use FP16 half-precision inference
+dnn: False  # use OpenCV DNN for ONNX inference
+vid_stride: 1  # video frame-rate stride
+use_velodyne: False #use depth information from velodyne lidar sensors. If false, use stereo depth estimation
+cam_calib_file: '/home/aneezahm001/Desktop/slam/data/kitti_mot/calib/calib_cam_to_cam.txt' #Path to stereo camera calibration file
+velo_calib_file: "/home/aneezahm001/Desktop/slam/data/kitti_mot/calib/calib_velo_to_cam.txt" #Path to velodyne calibration file
+velo_bin_dir: "/home/aneezahm001/Desktop/slam/data/KITTI/dataset/sequences/03/velodyne/" #path to directory containing velodyne point clouds

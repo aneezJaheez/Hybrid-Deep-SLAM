@@ -1,0 +1,5 @@
+%YAML:1.0
+
+#ORB_SLAM parameters
+vocabulary_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/configs/Vocabulary/ORBvoc.txt"
+settings_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/configs/Settings/KITTI00-02.yaml"
