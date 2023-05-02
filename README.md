@@ -81,13 +81,13 @@ cd src/hybrid_slam/configs/Vocabulary/
 tar -xvf ORBvoc.txt.tar.gz
 ```
 
-#4. Dataset
+# 4. Dataset
 
 The project can currently be run on stereo image datasets. The framework has been tested on the KITTI Visual Odometry sequences.  
 
 The KITTI VO dataset can be downloaded from the official website. Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php and extract it.
 
-#5. Configuring run-time settings
+# 5. Configuring run-time settings
 The project contains several settings that can be configured before run-time. These can be specified in the following .yaml files. 
 
 ```
@@ -136,7 +136,7 @@ velo_bin_dir: "/home/aneezahm001/Desktop/slam/data/KITTI/dataset/sequences/03/ve
 
 Explanations of additional run-time configurations are included in the .yaml files.
 
-#6. Running the project
+# 6. Running the project
 
 Once the project is built and the run-time configurations are specified in the .yaml files, the project can be run from the base folder by executing the following commands:
 
@@ -150,3 +150,12 @@ where final.launch is a ros launch file that instantiates roscore and the rosnod
 # 7. Processing your own sequences
 You will need to create a settings file with the calibration of your camera. See the settings file provided  KITTI datasets for stereo  cameras. We use the calibration model of OpenCV. Stereo input must be synchronized and rectified. 
 
+## **Reference**
+This project is inspired by these works:
+* [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2/tree/master)
+* [Salt-Pepper Robotics](https://github.com/PaolaArdon/Salt-Pepper) for the Hybrid ROS Architecture
+* [YOLO](https://github.com/ultralytics/ultralytics) for the object detection and segmentation pipeline
+
+---
+## **Special thanks**
+I want to thank my supervisor, Assoc. Professor Lam Siew Kei, for his constant supervision, invaluable assistance and support.
