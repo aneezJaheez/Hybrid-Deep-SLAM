@@ -22,7 +22,7 @@ build/
 *~
 lib/
 
-data/
+data/KITTI/
 trash/
 backups/
 devel/

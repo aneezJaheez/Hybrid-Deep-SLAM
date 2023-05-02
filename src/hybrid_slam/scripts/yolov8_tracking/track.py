@@ -149,6 +149,7 @@ class Perception:
         return im
 
     def detect(self, message, im0s_l, im0s_r):
+        start_detect = time.time()
         im_l, im_r = self.image_transforms(im0s_l), self.image_transforms(im0s_r)
 
         path_l = message.path
@@ -255,7 +256,8 @@ class Perception:
                             cam_coordinates = self.deprojector.deproject_velodyne(bbox)
 
                         if conf > 0.6:
-                            publish_data.append([frame_idx+1, id, output[0], output[1], output[2] - output[0], output[3] - output[1], conf, cam_coordinates[0], cam_coordinates[1], cam_coordinates[2], cls])
+                           # publish_data.append([frame_idx+1, id, output[0], output[1], output[2] - output[0], output[3] - output[1], conf, cam_coordinates[0], cam_coordinates[1], cam_coordinates[2], cls])
+                            publish_data.extend([frame_idx+1, id, output[0], output[1], output[2] - output[0], output[3] - output[1], conf, cam_coordinates[0], cam_coordinates[1], cam_coordinates[2], cls])
                         if self.save_txt:
                             # to MOT format
                             bbox_left = output[0]
@@ -311,7 +313,12 @@ class Perception:
 
             self.prev_frames[i] = self.curr_frames[i]
 
-            LOGGER.info(f"Deep Perception Node: Frame {frame_idx+1} {s_l}{'' if len(det) else '(no detections), '}{sum([dt.dt for dt in self.dt if hasattr(dt, 'dt')]) * 1E3:.1f}ms taken for inference.")
+            end_detect = time.time()
+            detect_time = (end_detect - start_detect) * 1000
+
+            #LOGGER.info(f"Deep Perception Node: Frame {frame_idx+1} {s_l}{'' if len(det) else '(no detections), '}{sum([dt.dt for dt in self.dt if hasattr(dt, 'dt')]) * 1E3:.1f}ms taken for inference.")
+            
+            LOGGER.info(f"Deep Perception Node: Frame {frame_idx+1} {s_l}{'' if len(det) else '(no detections), '}{detect_time}ms taken for inference.")
 
             self.publish_semantics(publish_data)
 
@@ -320,15 +327,17 @@ class Perception:
 
         msg = array_msg()
         msg.header.stamp = timestamp
-        msg.data.data = [item for sublist in publish_data for item in sublist]
-        msg.data.layout.data_offset = 0
-        msg.data.layout.dim = [MultiArrayDimension(), MultiArrayDimension()]
-        msg.data.layout.dim[0].label = "dim1"
-        msg.data.layout.dim[0].size = 3
-        msg.data.layout.dim[0].stride = 33
-        msg.data.layout.dim[1].label = "dim2"
-        msg.data.layout.dim[1].size = 11
-        msg.data.layout.dim[1].stride = 11
+        #msg.data.data = [item for sublist in publish_data for item in sublist]
+        msg.data.data = publish_data
+        
+        #msg.data.layout.data_offset = 0
+        #msg.data.layout.dim = [MultiArrayDimension(), MultiArrayDimension()]
+        #msg.data.layout.dim[0].label = "dim1"
+        #msg.data.layout.dim[0].size = 3
+        #msg.data.layout.dim[0].stride = 33
+        #msg.data.layout.dim[1].label = "dim2"
+        #msg.data.layout.dim[1].size = 11
+        #msg.data.layout.dim[1].stride = 11
 
         self.pub.publish(msg)
 
@@ -347,7 +356,7 @@ class Perception:
         
         end_time = time.time()
         execution_time_ms = (end_time - start_time) * 1000
-        print("Time taken for iteration:", execution_time_ms)
+        print("Time taken for inference and publishing semantics:", execution_time_ms)
 
     def run_perception(self):
         rospy.init_node("deep_perception", anonymous=True)
