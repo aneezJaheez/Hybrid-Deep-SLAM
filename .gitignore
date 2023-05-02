@@ -22,7 +22,11 @@ build/
 *~
 lib/
 
+<<<<<<< HEAD
 data/KITTI/
+=======
+data/
+>>>>>>> ba47b6940d1a6e9c1865deb30f8ae7516a72cfbb
 trash/
 backups/
 devel/
@@ -76,6 +80,7 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+<<<<<<< HEAD
 
 *.gif
 *.jpeg
@@ -83,3 +88,5 @@ CATKIN_IGNORE
 
 src/hybrid_slam/src/ORB_SLAM2/Examples/Monocular/
 
+=======
+>>>>>>> ba47b6940d1a6e9c1865deb30f8ae7516a72cfbb
