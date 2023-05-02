@@ -75,6 +75,78 @@ Once the thirdparty dependencies have been build, the entire ROS project can be 
 catkin_make
 ```
 
+Lastly, the ORB-SLAM vocabulary needs to be specified. A compressed version of this is included in the repository and can be extracted as follows:
+```
+cd src/hybrid_slam/configs/Vocabulary/
+tar -xvf ORBvoc.txt.tar.gz
+```
 
+#4. Dataset
 
+The project can currently be run on stereo image datasets. The framework has been tested on the KITTI Visual Odometry sequences.  
+
+The KITTI VO dataset can be downloaded from the official website. Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php and extract it.
+
+#5. Configuring run-time settings
+The project contains several settings that can be configured before run-time. These can be specified in the following .yaml files. 
+
+```
+src/hybrid_slam/configs/configs_SLAM.yaml
+src/hybrid_slam/configs/configs_DeepPerception.yaml
+```
+
+These files need to be configured prior to running the project. In the configs_SLAM.yaml file, the Vocabulary path and settings file path for running ORB-SLAM needs to be specified. 
+
+```
+#ORB_SLAM parameters
+vocabulary_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/configs/Vocabulary/ORBvoc.txt"
+settings_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/configs/Settings/KITTI00-02.yaml"
+```
+
+The settings file specifies camera calibration settings for SLAM. These files are already included in the repository for the KITTI stereo camera setup and can be found in the following respective folders:
+```
+src/hybrid_slam/configs/Vocabulary/
+src/hybrid_slam/configs/Settings/
+```
+
+Example instantiations for these settings are included in the .yaml file.
+
+The configs_DeepPerception.yaml file contains the settings for running the deep perception node as well as the data publisher node. As such, the path to the left and right stereo images needs to be specified. 
+
+```
+#Dataset
+left_imgs_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/data/KITTI/dataset/sequences/00/image_0/" #path to left stereo image directory
+right_imgs_path: "/home/aneezahm001/Desktop/hybrid_slam/src/hybrid_slam/data/KITTI/dataset/sequences/00/image_1/" #path to right stereo image directory
+```
+
+Further, the camera calibration file for the stereo camera setup also needs to be specified. The calibration files for the KITTI dataset are included in the repo (src/hybrid_slam/configs/calibration/). Example instantiations for these parameters for the KITTI VO dataset are included in the .yaml file.
+
+```
+cam_calib_file: '/home/aneezahm001/Desktop/slam/data/kitti_mot/calib/calib_cam_to_cam.txt' #Path to stereo camera calibration file
+```
+
+In addition, while the project performs stereo depth estimation and triangulation by default, the lidar depth estimates can also be used by modifying the following settings in the configs_DeepPerception.yaml file. The lidar velodyne data can be downloaded from the KITTI website () and its calibration files are included in the aforementioned calibration folder. 
+
+```
+use_velodyne: False #use depth information from velodyne lidar sensors. If false, use stereo depth estimation
+cam_calib_file: '/home/aneezahm001/Desktop/slam/data/kitti_mot/calib/calib_cam_to_cam.txt' #Path to stereo camera calibration file
+velo_calib_file: "/home/aneezahm001/Desktop/slam/data/kitti_mot/calib/calib_velo_to_cam.txt" #Path to velodyne calibration file (optional, only if use_velodyne is set to True)
+velo_bin_dir: "/home/aneezahm001/Desktop/slam/data/KITTI/dataset/sequences/03/velodyne/" #path to directory containing velodyne point clouds (optional, only if use_velodyne is set to true)
+```
+
+Explanations of additional run-time configurations are included in the .yaml files.
+
+#6. Running the project
+
+Once the project is built and the run-time configurations are specified in the .yaml files, the project can be run from the base folder by executing the following commands:
+
+```
+source devel/setup.bash
+roslaunch hybrid_slam final.launch
+```
+
+where final.launch is a ros launch file that instantiates roscore and the rosnodes. 
+
+# 7. Processing your own sequences
+You will need to create a settings file with the calibration of your camera. See the settings file provided  KITTI datasets for stereo  cameras. We use the calibration model of OpenCV. Stereo input must be synchronized and rectified. 
 
