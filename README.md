@@ -1,9 +1,7 @@
 # Hybrid SLAM and Multi-Task Deep Perception
 This is the Final Year Project of Aneez Ahmed Jaheezuddin, CS Batch 2019, for the Bachelor of Computer Science in NTU SCSE
 
-# Building the Project
-
-# 2. Prerequisites
+# 1. Prerequisites
 The project is tested on Ubuntu **20.04**. A powerful computer (e.g. i7) equipped with a GPU will ensure real-time performance.
 
 ## C++14 or C++0x Compiler
@@ -15,7 +13,7 @@ The project has been tested using Python 3.7.
 ## ROS Noetic
 The project has been tested on ROS Noetic. Ensure that the ROS session is sourced using the appropriate python environment to ensure that the right dependencies are being used during run-time. 
 
-# 3. Building the Hybrid SLAM Project
+# 2. Installing Dependenices
 
 Clone the repository:
 ```
@@ -50,4 +48,33 @@ Required by g2o (see below). Download and install instructions can be found at: 
 
 ### DBoW2 and g2o (Included in Thirdparty folder)
 We use modified versions of the [DBoW2](https://github.com/dorian3d/DBoW2) library to perform place recognition and [g2o](https://github.com/RainerKuemmerle/g2o) library to perform non-linear optimizations. Both modified libraries (which are BSD) are included in the *Thirdparty* folder.
+
+# 3. Building the Project
+
+Once all the prerequisites have been downloaded, the project can be built. This can be done in a few steps. 
+
+First, install the Thirdparty dependecies (Included in the Thirdparty folder). From the project base directory, execute the following commands. 
+
+To build DBoW2:
+```
+cd src/hybrid_slam/src/ORB_SLAM2/Thirdparty/DBoW2/
+mkdir build && cd build
+cmake ..
+make
+```
+
+To build g20:
+```
+cd src/hybrid_slam/src/ORB_SLAM2/Thirdparty/g2o/
+mkdir build && cd build
+cmake ..
+make
+```
+
+Once the thirdparty dependencies have been build, the entire ROS project can be built. From the project base directory, execute the following command:
+```
+catkin_make
+```
+
+
 
