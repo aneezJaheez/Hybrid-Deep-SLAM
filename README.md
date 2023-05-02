@@ -6,7 +6,38 @@ This is the Final Year Project of Aneez Ahmed Jaheezuddin, CS Batch 2019, for th
 # 2. Prerequisites
 The project is tested on Ubuntu **20.04**. A powerful computer (e.g. i7) equipped with a GPU will ensure real-time performance.
 
-## C++11 or C++0x Compiler
+## C++14 or C++0x Compiler
+The project has been tested using C++14.
+
+## Python 3.7
+The project has been tested using Python 3.7.
+
+## ROS Noetic
+The project has been tested on ROS Noetic. Ensure that the ROS session is sourced using the appropriate python environment to ensure that the right dependencies are being used during run-time. 
+
+# 3. Building the Hybrid SLAM Project
+
+Clone the repository:
+```
+git clone https://github.com/aneezJaheez/semantic-slam.git
+```
+
+The repository requires the Python and C++ pre-requisites to be installed separately. 
+
+## Python 
+
+As stated, the project has been tested using Python 3.7. After cloning the repository, the Python dependencies can be installed using the following commands:
+
+```
+cd hybrid_slam
+pip install -r requirements.txt
+```
+
+The python module uses rospy and will hence require ROS to be installed prior. 
+
+## C++
+
+The C++ dependencies are highlighted below:
 
 ## Pangolin
 We use [Pangolin](https://github.com/stevenlovegrove/Pangolin) for visualization and user interface. Dowload and install instructions can be found at: https://github.com/stevenlovegrove/Pangolin.
@@ -20,15 +51,3 @@ Required by g2o (see below). Download and install instructions can be found at: 
 ## DBoW2 and g2o (Included in Thirdparty folder)
 We use modified versions of the [DBoW2](https://github.com/dorian3d/DBoW2) library to perform place recognition and [g2o](https://github.com/RainerKuemmerle/g2o) library to perform non-linear optimizations. Both modified libraries (which are BSD) are included in the *Thirdparty* folder.
 
-## Python 3.7
-
-# 3. Building the Hybrid SLAM Project
-
-Clone the repository:
-```
-git clone https://github.com/aneezJaheez/semantic-slam.git
-```
-
-The repository requires the Python and C++ pre-requisites to be installed separately. 
-
-## Python 
